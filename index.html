@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Психолог Анна Смирнова — Безопасное пространство для изменений</title>
+  <meta name="description" content="Частный психолог. Индивидуальные консультации, работа с тревогой, отношениями и самооценкой. Онлайн и очно.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green-50: #f4f9f4;
+      --green-100: #e6f2e6;
+      --green-200: #c8e6c8;
+      --green-300: #a1d4a1;
+      --green-500: #6aaa6a;
+      --green-700: #3d7a3d;
+      --green-900: #2a5a2a;
+      --beige-50: #fdfbf7;
+      --beige-100: #f8f3ea;
+      --beige-200: #efe5d3;
+      --beige-300: #e0d0b5;
+      --text-primary: #2c2c2c;
+      --text-secondary: #5a5a5a;
+      --text-muted: #8a8a7a;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: .3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--text-primary);
+      background: var(--beige-50);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ──────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(253,251,247,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--beige-200);
+      transition: var(--transition);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 1.15rem; font-weight: 700; color: var(--green-700);
+      text-decoration: none; letter-spacing: -.02em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--text-secondary);
+      font-size: .9rem; font-weight: 500; transition: var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0; width: 0;
+      height: 2px; background: var(--green-500); transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--green-700); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--green-700); color: var(--white);
+      padding: 8px 20px; border-radius: 50px; font-size: .85rem;
+      font-weight: 600; text-decoration: none; transition: var(--transition);
+      border: none; cursor: pointer;
+    }
+    .nav-cta:hover { background: var(--green-900); transform: translateY(-1px); }
+
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: var(--transition); }
+    .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .burger.active span:nth-child(2) { opacity: 0; }
+    .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    .mobile-menu {
+      display: none; position: fixed; top: 64px; left: 0; right: 0;
+      background: var(--beige-50); border-bottom: 1px solid var(--beige-200);
+      padding: 24px; flex-direction: column; gap: 16px; z-index: 99;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      text-decoration: none; color: var(--text-secondary);
+      font-size: 1rem; font-weight: 500; padding: 8px 0;
+    }
+    .mobile-menu a:hover { color: var(--green-700); }
+
+    /* ── Hero ─────────────────────────────────── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 100px 0 80px;
+      background: linear-gradient(165deg, var(--beige-50) 0%, var(--green-50) 55%, var(--green-100) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -200px; right: -200px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, var(--green-200) 0%, transparent 70%);
+      opacity: .5;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; position: relative; }
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700;
+      line-height: 1.15; letter-spacing: -.03em; margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+    .hero-text h1 span { color: var(--green-700); }
+    .hero-text p {
+      font-size: 1.15rem; color: var(--text-secondary);
+      max-width: 480px; margin-bottom: 36px; line-height: 1.8;
+    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-700); color: var(--white);
+      padding: 14px 32px; border-radius: 50px; font-size: 1rem;
+      font-weight: 600; text-decoration: none; border: none;
+      cursor: pointer; transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(61,122,61,.3);
+    }
+    .btn-primary:hover { background: var(--green-900); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(61,122,61,.4); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--green-700);
+      padding: 14px 32px; border-radius: 50px; font-size: 1rem;
+      font-weight: 600; text-decoration: none;
+      border: 2px solid var(--green-300); cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-secondary:hover { background: var(--green-50); border-color: var(--green-500); }
+    .hero-image { display: flex; justify-content: center; }
+    .hero-image-wrapper {
+      width: 380px; height: 460px; border-radius: 200px 200px var(--radius) var(--radius);
+      background: linear-gradient(135deg, var(--green-200), var(--beige-200));
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+    }
+    .hero-image-wrapper svg { width: 180px; height: 180px; opacity: .6; }
+
+    .trust-badges {
+      display: flex; gap: 32px; margin-top: 40px; padding-top: 32px;
+      border-top: 1px solid var(--beige-200);
+    }
+    .trust-badge { display: flex; flex-direction: column; }
+    .trust-badge strong { font-size: 1.5rem; color: var(--green-700); font-weight: 700; }
+    .trust-badge span { font-size: .8rem; color: var(--text-muted); }
+
+    /* ── Section base ────────────────────────── */
+    section { padding: 100px 0; }
+    .section-label {
+      font-size: .8rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--green-500); margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700;
+      letter-spacing: -.02em; margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-desc {
+      font-size: 1.05rem; color: var(--text-secondary);
+      max-width: 560px; line-height: 1.8;
+    }
+    .section-header { margin-bottom: 56px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-desc { margin: 0 auto; }
+
+    /* ── Approach ─────────────────────────────── */
+    .approach { background: var(--white); }
+    .approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .approach-card {
+      padding: 36px; border-radius: var(--radius);
+      background: var(--beige-50); border: 1px solid var(--beige-200);
+      transition: var(--transition);
+    }
+    .approach-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green-200); }
+    .approach-icon {
+      width: 52px; height: 52px; border-radius: var(--radius-sm);
+      background: var(--green-100); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 20px;
+    }
+    .approach-icon svg { width: 26px; height: 26px; color: var(--green-700); }
+    .approach-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+    .approach-card p { font-size: .92rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Services ────────────────────────────── */
+    .services { background: var(--green-50); }
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .service-card {
+      background: var(--white); border-radius: var(--radius); padding: 32px;
+      border: 1px solid var(--beige-200); transition: var(--transition);
+      display: flex; gap: 20px;
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .service-num {
+      font-size: 2rem; font-weight: 800; color: var(--green-200);
+      line-height: 1; min-width: 48px;
+    }
+    .service-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+    .service-card p { font-size: .9rem; color: var(--text-secondary); line-height: 1.7; }
+    .service-tag {
+      display: inline-block; margin-top: 12px; font-size: .78rem;
+      color: var(--green-700); background: var(--green-100);
+      padding: 4px 12px; border-radius: 50px; font-weight: 600;
+    }
+
+    /* ── Testimonials ─────────────────────────── */
+    .testimonials { background: var(--white); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .testimonial-card {
+      padding: 32px; border-radius: var(--radius);
+      background: var(--beige-50); border: 1px solid var(--beige-200);
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '\201C'; position: absolute; top: 16px; left: 24px;
+      font-size: 3rem; color: var(--green-200); font-family: Georgia, serif; line-height: 1;
+    }
+    .testimonial-card p {
+      font-size: .92rem; color: var(--text-secondary); line-height: 1.75;
+      margin-bottom: 20px; padding-top: 24px; font-style: italic;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--green-200); display: flex; align-items: center;
+      justify-content: center; font-size: .85rem; font-weight: 700; color: var(--green-700);
+    }
+    .testimonial-info span { display: block; font-weight: 600; font-size: .9rem; }
+    .testimonial-info small { font-size: .78rem; color: var(--text-muted); }
+    .stars { color: #d4a017; font-size: .85rem; letter-spacing: 2px; margin-bottom: 12px; }
+
+    /* ── Contact ──────────────────────────────── */
+    .contact { background: linear-gradient(180deg, var(--green-50) 0%, var(--green-100) 100%); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+    .contact-info h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+    .contact-info p { color: var(--text-secondary); margin-bottom: 28px; line-height: 1.8; }
+    .contact-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .contact-detail-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--white); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+    .contact-detail-icon svg { width: 18px; height: 18px; color: var(--green-700); }
+    .contact-detail span { font-size: .92rem; color: var(--text-secondary); }
+    .contact-detail a { color: var(--green-700); text-decoration: none; font-weight: 600; }
+
+    .contact-form-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 40px; box-shadow: var(--shadow-md);
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: .85rem; font-weight: 600;
+      margin-bottom: 6px; color: var(--text-primary);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; padding: 12px 16px; border: 1.5px solid var(--beige-300);
+      border-radius: var(--radius-sm); font-size: .92rem; font-family: inherit;
+      background: var(--beige-50); color: var(--text-primary); transition: var(--transition);
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--green-500); background: var(--white);
+      box-shadow: 0 0 0 3px rgba(106,170,106,.15);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit {
+      width: 100%; padding: 14px; border: none; border-radius: 50px;
+      background: var(--green-700); color: var(--white); font-size: 1rem;
+      font-weight: 700; cursor: pointer; transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(61,122,61,.3);
+    }
+    .form-submit:hover { background: var(--green-900); transform: translateY(-1px); }
+    .form-note { text-align: center; margin-top: 12px; font-size: .78rem; color: var(--text-muted); }
+    .form-success {
+      display: none; text-align: center; padding: 40px 20px;
+    }
+    .form-success svg { width: 56px; height: 56px; color: var(--green-500); margin-bottom: 16px; }
+    .form-success h3 { font-size: 1.2rem; margin-bottom: 8px; }
+    .form-success p { color: var(--text-secondary); font-size: .92rem; }
+
+    /* ── Footer ───────────────────────────────── */
+    .footer {
+      background: var(--green-900); color: rgba(255,255,255,.7);
+      padding: 48px 0 32px;
+    }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .footer-copy { font-size: .82rem; }
+
+    /* ── Responsive ───────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .hero-text p { margin: 0 auto 36px; }
+      .hero-buttons { justify-content: center; }
+      .trust-badges { justify-content: center; }
+      .hero-image-wrapper { width: 280px; height: 340px; }
+      .approach-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .nav-cta.desktop { display: none; }
+      .burger { display: flex; }
+      .hero { padding: 80px 0 60px; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .trust-badges { flex-direction: column; gap: 16px; align-items: center; }
+      section { padding: 64px 0; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 28px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">Психолог Анна</a>
+      <ul class="nav-links">
+        <li><a href="#approach">Мой подход</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#testimonials">Отзывы</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta desktop">Записаться</a>
+      <button class="burger" aria-label="Меню" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#approach" onclick="toggleMenu()">Мой подход</a>
+      <a href="#services" onclick="toggleMenu()">Услуги</a>
+      <a href="#testimonials" onclick="toggleMenu()">Отзывы</a>
+      <a href="#contact" onclick="toggleMenu()">Контакты</a>
+      <a href="#contact" class="nav-cta" onclick="toggleMenu()" style="text-align:center;margin-top:8px">Записаться</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>Безопасное пространство для <span>изменений</span></h1>
+        <p>Помогаю справиться с тревогой, наладить отношения и вернуть доверие к себе. Работаю бережно и конфиденциально.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn-primary">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Записаться на сессию
+          </a>
+          <a href="#approach" class="btn-secondary">Узнать подробнее</a>
+        </div>
+        <div class="trust-badges">
+          <div class="trust-badge"><strong>8+</strong><span>Лет практики</span></div>
+          <div class="trust-badge"><strong>500+</strong><span>Клиентов</span></div>
+          <div class="trust-badge"><strong>100%</strong><span>Конфиденциальность</span></div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-image-wrapper">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--green-700)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="approach" id="approach">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Мой подход</p>
+        <h2 class="section-title">Терапия, построенная на доверии</h2>
+        <p class="section-desc">Я сочетаю доказательные методы с вниманием к вашей уникальной истории. Каждый шаг — в вашем темпе.</p>
+      </div>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <div class="approach-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>Человекоцентрированный подход</h3>
+          <p>Вы — главный эксперт своей жизни. Я создаю условия, в которых вы сможете услышать себя и найти собственные ответы.</p>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Безопасность и границы</h3>
+          <p>Строго соблюдаю этику и конфиденциальность. Наше пространство защищено — здесь можно быть собой без страха оценки.</p>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Интеграция методов</h3>
+          <p>КПТ, схема-терапия, EMDR — подбираю инструменты под ваш запрос, а не под одну школу. Главное — результат.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header center">
+        <p class="section-label">Услуги</p>
+        <h2 class="section-title">С чем я помогаю</h2>
+        <p class="section-desc">Индивидуальные консультации онлайн и очно в Москве. Первая встреча — знакомство, без обязательств.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-num">01</div>
+          <div>
+            <h3>Тревога и панические атаки</h3>
+            <p>Научимся отличать реальную угрозу от тревожной сигнализации, снизим интенсивность и вернём ощущение опоры.</p>
+            <span class="service-tag">КПТ · EMDR</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">02</div>
+          <div>
+            <h3>Отношения и границы</h3>
+            <p>Разберёмся в паттернах, которые повторяются в отношениях, и научимся выстраивать здоровые границы.</p>
+            <span class="service-tag">Схема-терапия</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">03</div>
+          <div>
+            <h3>Самооценка и идентичность</h3>
+            <p>Восстановим контакт с собой, отделим чужие ожидания от ваших желаний и укрепим внутреннюю опору.</p>
+            <span class="service-tag">Человекоцентрированная</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-num">04</div>
+          <div>
+            <h3>Выгорание и жизненные кризисы</h3>
+            <p>Помогаю пройти через сложный период, найти ресурсы и выстроить жизнь в согласии с собой.</p>
+            <span class="service-tag">Интегративный подход</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header center">
+        <p class="section-label">Отзывы</p>
+        <h2 class="section-title">Истории, которые доверили</h2>
+        <p class="section-desc">Имена изменены для сохранения конфиденциальности.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>После 10 лет тревоги я впервые чувствую, что могу дышать. Анна не давала советов — она помогла мне услышать себя. Это изменило всё.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">М</div>
+            <div class="testimonial-info"><span>Мария</span><small>Тревожное расстройство · 8 сессий</small></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>Я пришла с мыслью «со мной что-то не так». Сейчас я понимаю, что со мной всё в порядке — просто мне не хватало разрешения быть собой.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">Е</div>
+            <div class="testimonial-info"><span>Елена</span><small>Самооценка · 12 сессий</small></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>Впервые почувствовала, что терапия — это не «лечение», а разговор с кем-то, кто действительно на вашей стороне. Без осуждения. Без спешки.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">Д</div>
+            <div class="testimonial-info"><span>Дарья</span><small>Отношения · 6 сессий</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p class="section-label">Контакты</p>
+          <h2 class="section-title">Сделайте первый шаг</h2>
+          <p>Заполните форму или свяжитесь напрямую. Я отвечу в течение 24 часов и помогу подобрать удобное время.</p>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <span>+7 (999) 123-45-67</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <a href="mailto:anna@example.com">anna@example.com</a>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>Москва, онлайн по всему миру</span>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" placeholder="Как к вам обращаться" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="topic">Запрос</label>
+              <select id="topic" name="topic">
+                <option value="" disabled selected>Выберите тему</option>
+                <option value="anxiety">Тревога и панические атаки</option>
+                <option value="relationships">Отношения и границы</option>
+                <option value="self-esteem">Самооценка и идентичность</option>
+                <option value="burnout">Выгорание и кризисы</option>
+                <option value="other">Другое</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Сообщение</label>
+              <textarea id="message" name="message" placeholder="Расскажите, что вас беспокоит — коротко или подробно"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Отправить заявку</button>
+            <p class="form-note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <h3>Заявка отправлена!</h3>
+            <p>Я свяжусь с вами в ближайшие 24 часа.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">Психолог Анна</span>
+      <span class="footer-copy">&copy; 2026 Все права защищены. Конфиденциально.</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('active');
+      document.querySelector('.burger').classList.toggle('active');
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      var data = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(res) {
+        if (res.ok) {
+          form.style.display = 'none';
+          document.querySelector('.form-note').style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+        }
+      }).catch(function() {
+        alert('Произошла ошибка. Попробуйте ещё раз или свяжитесь напрямую.');
+      });
+    });
+  </script>
+</body>
+</html>
